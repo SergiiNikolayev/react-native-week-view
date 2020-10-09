@@ -12,7 +12,15 @@ const getFontSizeHeader = (numberOfDays) => {
   return 16;
 };
 
-const Title = ({ style, showTitle, numberOfDays, selectedDate, textStyle }) => {
+const Title = ({
+  style,
+  showTitle,
+  showCustomTitleText,
+  customTitleText,
+  numberOfDays,
+  selectedDate,
+  textStyle,
+}) => {
   return (
     <View style={[styles.title, style]}>
       {showTitle ? (
@@ -26,7 +34,8 @@ const Title = ({ style, showTitle, numberOfDays, selectedDate, textStyle }) => {
             textStyle,
           ]}
         >
-          {getCurrentMonth(selectedDate)}
+          {showCustomTitleText &&
+            (customTitleText || getCurrentMonth(selectedDate))}
         </Text>
       ) : null}
     </View>
@@ -35,6 +44,8 @@ const Title = ({ style, showTitle, numberOfDays, selectedDate, textStyle }) => {
 
 Title.propTypes = {
   showTitle: PropTypes.bool,
+  showCustomTitleText: PropTypes.bool,
+  customTitleText: PropTypes.string,
   numberOfDays: PropTypes.oneOf(availableNumberOfDays).isRequired,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
   style: PropTypes.object,

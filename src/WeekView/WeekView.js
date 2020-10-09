@@ -189,6 +189,8 @@ export default class WeekView extends Component {
   render() {
     const {
       showTitle,
+      showCustomTitleText,
+      customTitleText,
       numberOfDays,
       headerStyle,
       headerTextStyle,
@@ -211,6 +213,8 @@ export default class WeekView extends Component {
         <View style={styles.headerContainer}>
           <Title
             showTitle={showTitle}
+            showCustomTitleText={showCustomTitleText}
+            customTitleText={customTitleText}
             style={headerStyle}
             textStyle={headerTextStyle}
             numberOfDays={numberOfDays}
@@ -302,6 +306,8 @@ WeekView.propTypes = {
   startHour: PropTypes.number,
   EventComponent: PropTypes.elementType,
   showTitle: PropTypes.bool,
+  showCustomTitleText: PropTypes.bool,
+  customTitleText: PropTypes.string,
 };
 
 WeekView.defaultProps = {
@@ -310,4 +316,5 @@ WeekView.defaultProps = {
   hoursInDisplay: 6,
   startHour: 0,
   showTitle: true,
+  showCustomTitleText: true,
 };
