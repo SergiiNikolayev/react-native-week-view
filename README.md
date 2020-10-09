@@ -1,4 +1,5 @@
 # react-native-week-view
+# Forked from https://github.com/hoangnm/react-native-week-view
 
 ![weekView](images/gif.gif)
 ## Props
@@ -72,7 +73,6 @@ addLocale('fr', {
 });
 ```
 ## TODO
-- [x] allow to swipe between weeks or days.
-- [x] header should be swipeable with columns.
-- [x] allow to click on grid view.
-- [ ] allow to drag drop events to specific time and date.
+- [x] add props: eventTextStyle,
+- [x] disable: pagingEnabled on ScrollView of events,
+- [ ] add all day events at the top of the calendar,

@@ -8,6 +8,7 @@ const Event = ({
   onPress,
   position,
   EventComponent,
+  eventTextStyle,
   containerStyle,
 }) => {
   return (
@@ -26,7 +27,12 @@ const Event = ({
       {EventComponent ? (
         <EventComponent event={event} position={position} />
       ) : (
-        <Text style={styles.description}>{event.description}</Text>
+        <Text style={[
+          styles.description,
+          eventTextStyle && eventTextStyle,
+          {
+            color: event.textColor,
+          },]}>{event.description}</Text>
       )}
     </TouchableOpacity>
   );
@@ -52,6 +58,7 @@ Event.propTypes = {
   onPress: PropTypes.func,
   position: positionPropType,
   containerStyle: PropTypes.object,
+  eventTextStyle: PropTypes.object,
   EventComponent: PropTypes.elementType,
 };
 

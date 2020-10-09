@@ -157,6 +157,7 @@ class Events extends PureComponent {
       times,
       onEventPress,
       eventContainerStyle,
+      eventTextStyle,
       EventComponent,
     } = this.props;
     const totalEvents = this.processEvents(
@@ -190,6 +191,7 @@ class Events extends PureComponent {
                     onPress={onEventPress}
                     EventComponent={EventComponent}
                     containerStyle={eventContainerStyle}
+                    eventTextStyle={eventTextStyle}
                   />
                 ))}
               </View>
@@ -211,6 +213,7 @@ Events.propTypes = {
   onEventPress: PropTypes.func,
   onGridClick: PropTypes.func,
   eventContainerStyle: PropTypes.object,
+  eventTextStyle: PropTypes.object,
   EventComponent: PropTypes.elementType,
 };
 
