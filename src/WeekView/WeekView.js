@@ -30,6 +30,7 @@ export default class WeekView extends Component {
     this.eventsGrid = null;
     this.verticalAgenda = null;
     this.header = null;
+    this.headerAllday = null;
     this.pagesLeft = 2;
     this.pagesRight = 2;
     this.currentPageIndex = this.pagesLeft;
@@ -46,6 +47,9 @@ export default class WeekView extends Component {
     });
     this.eventsGridScrollX.addListener((position) => {
       this.header.scrollTo({ x: position.value, animated: false });
+    });
+    this.eventsGridScrollX.addListener((position) => {
+      this.headerAllday.scrollTo({ x: position.value, animated: false });
     });
   }
 
@@ -136,6 +140,10 @@ export default class WeekView extends Component {
     this.header = ref;
   };
 
+  headerRefAllday = (ref) => {
+    this.headerAllday = ref;
+  };
+
   calculatePagesDates = memoizeOne((currentMoment, numberOfDays) => {
     const initialDates = [];
     for (let i = -this.pagesLeft; i <= this.pagesRight; i += 1) {
@@ -145,7 +153,7 @@ export default class WeekView extends Component {
     return initialDates;
   });
 
-  sortEventsByDate = memoizeOne((events) => {
+  sortEventsByDate = memoizeOne((events, isAllDay) => {
     // Stores the events hashed by their date
     // For example: { "2020-02-03": [event1, event2, ...] }
     // If an event spans through multiple days, adds the event multiple times
@@ -170,6 +178,21 @@ export default class WeekView extends Component {
         if (!sortedEvents[dateStr]) {
           sortedEvents[dateStr] = [];
         }
+
+        if (isAllDay && event.type === 'lodging') {
+          sortedEvents[dateStr].push({
+            ...event,
+            startDate: actualStartDate.toDate(),
+            endDate: actualEndDate.toDate(),
+          });
+        } else if (!isAllDay) {
+          sortedEvents[dateStr].push({
+            ...event,
+            startDate: actualStartDate.toDate(),
+            endDate: actualEndDate.toDate(),
+          });
+        }
+
         sortedEvents[dateStr].push({
           ...event,
           startDate: actualStartDate.toDate(),
@@ -201,13 +224,19 @@ export default class WeekView extends Component {
       events,
       hoursInDisplay,
       onGridClick,
+      onGridAlldayClick,
       EventComponent,
       eventTextStyle,
+      showCustomAlldayTitleText,
+      customAlldayTitleText,
     } = this.props;
     const { currentMoment } = this.state;
     const times = this.calculateTimes(hoursInDisplay);
     const initialDates = this.calculatePagesDates(currentMoment, numberOfDays);
     const eventsByDate = this.sortEventsByDate(events);
+    const alldayEventsByDate = this.sortEventsByDate(events, true);
+    const timesAllday = ['0:00'];
+
     return (
       <View style={styles.container}>
         <View style={styles.headerContainer}>
@@ -241,6 +270,43 @@ export default class WeekView extends Component {
             ))}
           </ScrollView>
         </View>
+
+        <View style={styles.headerContainer}>
+          <Title
+            showTitle={showTitle}
+            showCustomTitleText={showCustomAlldayTitleText}
+            customTitleText={customAlldayTitleText}
+            style={headerStyle}
+            textStyle={headerTextStyle}
+            numberOfDays={numberOfDays}
+            selectedDate={currentMoment}
+          />
+          <ScrollView
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            scrollEnabled={false}
+            automaticallyAdjustContentInsets={false}
+            ref={this.headerRefAllday}
+          >
+            {initialDates.map((date) => (
+              <Events
+                key={date}
+                times={timesAllday}
+                eventsByDate={alldayEventsByDate}
+                initialDate={date}
+                numberOfDays={numberOfDays}
+                onEventPress={onEventPress}
+                onGridClick={onGridAlldayClick}
+                hoursInDisplay={hoursInDisplay}
+                EventComponent={EventComponent}
+                eventContainerStyle={eventContainerStyle}
+                eventTextStyle={eventTextStyle}
+              />
+            ))}
+          </ScrollView>
+        </View>
+
         <ScrollView ref={this.verticalAgendaRef}>
           <View style={styles.scrollViewContent}>
             <Times times={times} textStyle={hourTextStyle} />
@@ -295,6 +361,7 @@ WeekView.propTypes = {
   onSwipePrev: PropTypes.func,
   onEventPress: PropTypes.func,
   onGridClick: PropTypes.func,
+  onGridAlldayClick: PropTypes.func,
   headerStyle: PropTypes.object,
   headerTextStyle: PropTypes.object,
   hourTextStyle: PropTypes.object,
@@ -308,6 +375,8 @@ WeekView.propTypes = {
   showTitle: PropTypes.bool,
   showCustomTitleText: PropTypes.bool,
   customTitleText: PropTypes.string,
+  showCustomAlldayTitleText: PropTypes.bool,
+  customAlldayTitleText: PropTypes.string,
 };
 
 WeekView.defaultProps = {
