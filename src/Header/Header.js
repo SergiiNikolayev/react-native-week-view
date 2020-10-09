@@ -17,6 +17,21 @@ const getDayTextStyles = (numberOfDays) => {
 };
 
 const Column = ({ column, numberOfDays, format, style, textStyle }) => {
+  let text = getFormattedDate(column, format);
+
+  if (format === 'dddd MMMM, D') {
+    const dayOfTheWeek = text.split(' ', 1);
+    const space = ' ';
+    const monthDay = text.replace(`${dayOfTheWeek}${space}`, '');
+
+    text = (
+      <View style={styles.dateWrapper}>
+        <Text style={styles.dayOfTheWeek}>{dayOfTheWeek}</Text>
+        <Text style={styles.monthDay}>{monthDay}</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.column, style]}>
       <Text
@@ -26,7 +41,7 @@ const Column = ({ column, numberOfDays, format, style, textStyle }) => {
           textStyle,
         ]}
       >
-        {getFormattedDate(column, format)}
+        {text}
       </Text>
     </View>
   );
