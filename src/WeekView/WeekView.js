@@ -192,12 +192,6 @@ export default class WeekView extends Component {
             endDate: actualEndDate.toDate(),
           });
         }
-
-        sortedEvents[dateStr].push({
-          ...event,
-          startDate: actualStartDate.toDate(),
-          endDate: actualEndDate.toDate(),
-        });
       }
     });
     // For each day, sort the events by the minute (in-place)
