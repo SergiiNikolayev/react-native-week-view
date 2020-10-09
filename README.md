@@ -75,4 +75,5 @@ addLocale('fr', {
 ## TODO
 - [x] add props: eventTextStyle,
 - [x] disable: pagingEnabled on ScrollView of events,
+- [x] add props: to customize title text,
 - [ ] add all day events at the top of the calendar,
