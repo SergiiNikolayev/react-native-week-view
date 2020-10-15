@@ -172,6 +172,8 @@ export default class WeekView extends Component {
         const endOfDay = moment(date).endOf('day');
         const actualStartDate = moment.max(startDate, startOfDay);
         const actualEndDate = moment.min(endDate, endOfDay);
+        const lodging = isAllDay && event.type === 'lodging';
+        const notALodging = !isAllDay && event.type !== 'lodging';
 
         // Add to object
         const dateStr = date.format(DATE_STR_FORMAT);
@@ -179,13 +181,13 @@ export default class WeekView extends Component {
           sortedEvents[dateStr] = [];
         }
 
-        if (isAllDay && event.type === 'lodging') {
+        if (lodging) {
           sortedEvents[dateStr].push({
             ...event,
             startDate: actualStartDate.toDate(),
             endDate: actualEndDate.toDate(),
           });
-        } else if (!isAllDay) {
+        } else if (notALodging) {
           sortedEvents[dateStr].push({
             ...event,
             startDate: actualStartDate.toDate(),
