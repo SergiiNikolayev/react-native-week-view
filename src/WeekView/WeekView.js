@@ -6,6 +6,7 @@ import memoizeOne from 'memoize-one';
 
 import Event from '../Event/Event';
 import Events from '../Events/Events';
+import AlldayEvents from '../AlldayEvents/AlldayEvents';
 import Header from '../Header/Header';
 import Title from '../Title/Title';
 import Times from '../Times/Times';
@@ -288,6 +289,7 @@ export default class WeekView extends Component {
             {initialDates.map((date) => (
               <Events
                 key={date}
+                isAllday
                 times={timesAllday}
                 eventsByDate={alldayEventsByDate}
                 initialDate={date}

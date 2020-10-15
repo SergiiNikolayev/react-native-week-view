@@ -27,20 +27,23 @@ const areEventsOverlapped = (event1, event2) => {
 
 class Events extends PureComponent {
   getStyleForEvent = (item) => {
+    const { isAllday } = this.props;
+
     const startDate = moment(item.startDate);
     const startHours = startDate.hours();
     const startMinutes = startDate.minutes();
     const totalStartMinutes = startHours * MINUTES_IN_HOUR + startMinutes;
     const top = this.minutesToYDimension(totalStartMinutes);
     const deltaMinutes = moment(item.endDate).diff(item.startDate, 'minutes');
-    const height = this.minutesToYDimension(deltaMinutes);
+    const height = this.minutesToYDimension(isAllday ? 60 : deltaMinutes);
     const width = this.getEventItemWidth();
 
     return {
-      top: top + CONTENT_OFFSET,
-      left: 0,
-      height,
-      width,
+      top: isAllday ? top + 4 : top + CONTENT_OFFSET + 4,
+      left: 5,
+      height: height - 8,
+      width: width - 6,
+      borderRadius: 5,
     };
   };
 
@@ -159,6 +162,7 @@ class Events extends PureComponent {
       eventContainerStyle,
       eventTextStyle,
       EventComponent,
+      isAllday,
     } = this.props;
     const totalEvents = this.processEvents(
       eventsByDate,
@@ -167,7 +171,7 @@ class Events extends PureComponent {
     );
 
     return (
-      <View style={styles.container}>
+      <View style={isAllday ? styles.allDayContainer : styles.container}>
         {times.map((time) => (
           <View
             key={time}
@@ -215,6 +219,7 @@ Events.propTypes = {
   eventContainerStyle: PropTypes.object,
   eventTextStyle: PropTypes.object,
   EventComponent: PropTypes.elementType,
+  isAllday: PropTypes.bool,
 };
 
 export default Events;

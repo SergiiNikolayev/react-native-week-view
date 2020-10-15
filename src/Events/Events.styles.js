@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     paddingTop: CONTENT_OFFSET,
     width: CONTAINER_WIDTH,
   },
+  allDayContainer: {
+    flex: 1,
+    width: CONTAINER_WIDTH,
+    borderBottomWidth: 1,
+    borderBottomColor: GREY_COLOR,
+  },
   timeRow: {
     flex: 0,
   },
