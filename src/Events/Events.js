@@ -22,7 +22,8 @@ const EVENTS_CONTAINER_WIDTH = CONTAINER_WIDTH - EVENT_HORIZONTAL_PADDING;
 const MIN_ITEM_WIDTH = 4;
 
 const areEventsOverlapped = (event1, event2) => {
-  return moment(event1.endDate).isSameOrAfter(event2.startDate);
+  // return moment(event1.endDate).isSameOrAfter(event2.startDate);
+  return moment(event1.endDate).isAfter(event2.startDate);
 };
 
 class Events extends PureComponent {
