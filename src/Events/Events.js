@@ -31,6 +31,7 @@ class Events extends PureComponent {
     const { isAllday } = this.props;
 
     const startDate = moment(item.startDate);
+    const endDate = moment(item.endDate);
     const startHours = startDate.hours();
     const startMinutes = startDate.minutes();
     const totalStartMinutes = startHours * MINUTES_IN_HOUR + startMinutes;
@@ -39,8 +40,29 @@ class Events extends PureComponent {
     const height = this.minutesToYDimension(isAllday ? 60 : deltaMinutes);
     const width = this.getEventItemWidth();
 
+    if (item.eventActualEndDate && isAllday) {
+      // const start = startDate.isSame(item.eventActualEndDate, 'days');
+      const isEndOfEvent = endDate.isSame(item.eventActualEndDate, 'days');
+
+      if (isEndOfEvent) {
+        return {
+          top: top + 4,
+          left: 0,
+          height: height - 8,
+          width: width - 8,
+        };
+      }
+
+      return {
+        top: top + 4,
+        left: 0,
+        height: height - 8,
+        width: EVENTS_CONTAINER_WIDTH,
+      };
+    }
+
     return {
-      top: isAllday ? top + 4 : top + CONTENT_OFFSET + 4,
+      top: top + CONTENT_OFFSET + 4,
       left: 5,
       height: height - 8,
       width: width - 6,

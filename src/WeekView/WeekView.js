@@ -160,7 +160,7 @@ export default class WeekView extends Component {
     const sortedEvents = {};
     events.forEach((event) => {
       const startDate = moment(event.startDate);
-      const endDate = moment(event.endDate);
+      const endDate = moment(event.endDate).subtract(1, 'm');
 
       for (
         let date = moment(startDate);
@@ -186,6 +186,7 @@ export default class WeekView extends Component {
             ...event,
             startDate: actualStartDate.toDate(),
             endDate: actualEndDate.toDate(),
+            eventActualEndDate: endDate,
           });
         } else if (notALodging) {
           sortedEvents[dateStr].push({
@@ -202,6 +203,7 @@ export default class WeekView extends Component {
         return moment(a.startDate).diff(b.startDate, 'minutes');
       });
     });
+
     return sortedEvents;
   });
 
