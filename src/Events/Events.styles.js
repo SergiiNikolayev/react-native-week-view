@@ -7,8 +7,8 @@ export const CONTENT_OFFSET = 16;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: CONTENT_OFFSET,
     width: CONTAINER_WIDTH,
+    paddingTop: 0,
   },
   allDayContainer: {
     flex: 1,
@@ -25,12 +25,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     left: 0,
+    paddingTop: -CONTENT_OFFSET,
   },
   event: {
     flex: 1,
     overflow: 'hidden',
     borderColor: GREY_COLOR,
     borderLeftWidth: 1,
+    marginTop: -CONTENT_OFFSET,
   },
   events: {
     position: 'absolute',

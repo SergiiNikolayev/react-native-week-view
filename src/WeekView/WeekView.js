@@ -216,6 +216,7 @@ export default class WeekView extends Component {
       headerStyle,
       headerTextStyle,
       hourTextStyle,
+      hourContainerTextStyle,
       eventContainerStyle,
       formatDateHeader,
       onEventPress,
@@ -308,7 +309,7 @@ export default class WeekView extends Component {
 
         <ScrollView ref={this.verticalAgendaRef}>
           <View style={styles.scrollViewContent}>
-            <Times times={times} textStyle={hourTextStyle} />
+            <Times times={times} textStyle={hourTextStyle} hourContainerTextStyle={hourContainerTextStyle} />
             <ScrollView
               horizontal
               // pagingEnabled
@@ -364,6 +365,7 @@ WeekView.propTypes = {
   headerStyle: PropTypes.object,
   headerTextStyle: PropTypes.object,
   hourTextStyle: PropTypes.object,
+  hourContainerTextStyle: PropTypes.object,
   eventContainerStyle: PropTypes.object,
   eventTextStyle: PropTypes.object,
   selectedDate: PropTypes.instanceOf(Date).isRequired,
