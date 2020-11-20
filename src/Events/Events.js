@@ -209,7 +209,7 @@ class Events extends PureComponent {
               onPress={(e) => this.onGridClick(e, dayIndex)}
               key={dayIndex}
             >
-              <View style={styles.event}>
+              <View style={isAllday ? styles.eventAllDay : styles.event}>
                 {eventsInSection.map((item) => (
                   <Event
                     key={item.data.id}

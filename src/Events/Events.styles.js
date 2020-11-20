@@ -34,6 +34,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     marginTop: -CONTENT_OFFSET,
   },
+  eventAllDay: {
+    flex: 1,
+    overflow: 'hidden',
+    borderColor: GREY_COLOR,
+    borderLeftWidth: 1,
+  },
   events: {
     position: 'absolute',
     flexDirection: 'row',
