@@ -214,6 +214,7 @@ class Events extends PureComponent {
                   <Event
                     key={item.data.id}
                     event={item.data}
+                    isAllday={isAllday}
                     position={item.style}
                     onPress={onEventPress}
                     EventComponent={EventComponent}

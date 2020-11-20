@@ -8,6 +8,14 @@ const styles = StyleSheet.create({
     flex: 1,
     overflow: 'hidden',
   },
+  descriptionTime: {
+    marginVertical: 1,
+    marginHorizontal: 2,
+    fontWeight: '700',
+    color: '#fff',
+    textAlign: 'left',
+    fontSize: 13,
+  },
   description: {
     marginVertical: 1,
     marginHorizontal: 2,

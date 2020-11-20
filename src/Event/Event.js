@@ -1,16 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import styles from './Event.styles';
 
 const Event = ({
-  event,
-  onPress,
-  position,
-  EventComponent,
-  eventTextStyle,
-  containerStyle,
-}) => {
+   event,
+   onPress,
+   position,
+   EventComponent,
+   eventTextStyle,
+   containerStyle,
+   isAllday,
+ }) => {
+  const parseDescription = () => {
+    const a = event.description.split(' ')
+    const secondSpace = 2
+    const eventTime = a.slice(0, secondSpace).join(' ')
+    const eventDescription =  a.slice(secondSpace).join(' ');
+
+    return <View>
+      <Text
+        style={[
+          styles.descriptionTime,
+          eventTextStyle && eventTextStyle,
+          {
+            color: event.textColor,
+          },
+        ]}>{eventTime}</Text>
+      <Text
+        style={[
+          styles.description,
+          eventTextStyle && eventTextStyle,
+          {
+            color: event.textColor,
+          },
+        ]}>{eventDescription}</Text>
+    </View>
+  }
+
   return (
     <TouchableOpacity
       onPress={() => onPress && onPress(event)}
@@ -25,20 +52,23 @@ const Event = ({
       disabled={!onPress}
     >
       {EventComponent ? (
-        <EventComponent event={event} position={position} />
-      ) : (
-        <Text
-          style={[
-            styles.description,
-            eventTextStyle && eventTextStyle,
-            {
-              color: event.textColor,
-            },
-          ]}
-        >
-          {event.description}
-        </Text>
-      )}
+          <EventComponent event={event} position={position}/>
+        ) :
+        isAllday ?
+          (<Text
+              style={[
+                styles.description,
+                eventTextStyle && eventTextStyle,
+                {
+                  color: event.textColor,
+                },
+              ]}
+            >
+              {event.description}
+            </Text>
+          )
+          : parseDescription()
+      }
     </TouchableOpacity>
   );
 };
@@ -61,6 +91,7 @@ const positionPropType = PropTypes.shape({
 Event.propTypes = {
   event: eventPropType.isRequired,
   onPress: PropTypes.func,
+  isAllday: PropTypes.bool,
   position: positionPropType,
   containerStyle: PropTypes.object,
   eventTextStyle: PropTypes.object,
