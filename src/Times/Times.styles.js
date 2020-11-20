@@ -4,7 +4,6 @@ import { CONTAINER_HEIGHT } from '../utils';
 const styles = StyleSheet.create({
   columnContainer: {
     paddingTop: 10,
-    paddingLeft: 10,
     width: 80,
   },
   label: {
