@@ -316,6 +316,9 @@ export default class WeekView extends Component {
               automaticallyAdjustContentInsets={false}
               onMomentumScrollEnd={this.scrollEnded}
               scrollEventThrottle={32}
+              contentContainerStyle={{
+                paddingBottom: Platform.OS === 'ios' ? 150 : 50,
+              }}
               onScroll={Animated.event(
                 [
                   {
